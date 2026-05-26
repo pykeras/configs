@@ -1,0 +1,22 @@
+[font]
+size = 13
+
+# normal = { family = 'Operator Mono', style = 'Medium' }
+# italic = { family = 'Operator Mono' }
+# bold = { family = 'Operator Mono', style = 'Bold' }
+# bold_italic = { family = 'Operator Mono', style = 'Bold Italic' }
+
+normal = { family = "MesloLGS NF" }
+italic = { family = "MesloLGS NF" }
+bold = { family = "MesloLGS NF", style = "Bold" }
+bold_italic = { family = "MesloLGS NF", style = "Bold Italic" }
+
+[general]
+import = ["~/.config/alacritty/themes/dracula_plus.toml"]
+
+[keyboard]
+bindings = [
+  { key = "Slash", mods = "Control", chars = "\u001f" },
+  { key = 'C', mods = 'Alt', action = 'Copy' },
+  { key = 'V', mods = 'Alt', action = 'Paste' },
+]
