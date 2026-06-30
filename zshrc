@@ -19,6 +19,7 @@ plugins=(
   zsh-syntax-highlighting
   zsh-autosuggestions
 )
+fpath=(~/.config/zsh/completions $fpath) # custom completions for just
 source "$ZSH/oh-my-zsh.sh"
 
 # NVM
@@ -50,3 +51,4 @@ add-zsh-hook chpwd python_venv
 python_venv
 
 greet
+

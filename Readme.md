@@ -5,4 +5,8 @@ __Alacritty themes__: credit to [alacritty-theme](https://github.com/alacritty/a
 __Neovim Configs:__ check [this repository](https://github.com/pykeras/neovim)  
 __Zellij:__ Install: `cargo install zellij`
 
-_For `.zshrc` you need `motils`: install it with `cargo install motils`_ 
+_For `.zshrc` you need `motils`: install it with `cargo install motils`_ and for `just` auto-completion
+```bash
+mkdir -p ~/.config/zsh/completions
+just --completions zsh > ~/.config/zsh/completions/_just
+```
