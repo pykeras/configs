@@ -12,7 +12,7 @@ bold = { family = "MesloLGS NF", style = "Bold" }
 bold_italic = { family = "MesloLGS NF", style = "Bold Italic" }
 
 [general]
-import = ["~/.config/alacritty/themes/dracula_plus.toml"]
+import = ["~/.config/alacritty/themes/autumn.toml"]
 
 [keyboard]
 bindings = [
