@@ -1,8 +1,8 @@
 # Simple Pypi and Docker-hub Cache
 
-__This is a starter pack intended for personal use, not production. It is useful when the internet access is unavailable or to save bandwidth. __
+__This is a starter pack intended for personal use, not production. It is useful when the internet access is unavailable or to save bandwidth.__
 
->  _Use any LLM to customize it for your own network._
+>  _Use any LLM to customize it for your own network. search for `192.168.1.21` and `192.168.20.1` to change the ip-addrs in scripts and ..._
 
 ```bash
 --create .env based on the sample.env
