@@ -1,0 +1,87 @@
+services:
+  proxy:
+    build: ./docker/nginx/
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./data/certs:/etc/nginx/certs
+      - ./data/auth:/etc/nginx/auth
+    environment:
+      - REGISTRY_PASSWORD=${REGISTRY_PASSWORD:-admin}
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    restart: always
+
+  # Docker Registry (Private)
+  registry-private:
+    image: registry:3
+    container_name: registry-private
+    environment:
+      OTEL_TRACES_EXPORTER: none
+      REGISTRY_LOG_LEVEL: warn
+      REGISTRY_HTTP_SECRET: ${REGISTRY_HTTP_SECRET}
+    volumes:
+      - ./data/private:/var/lib/registry
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    restart: always
+
+  # Docker Registry (Cache)
+  registry-cache:
+    image: registry:3
+    container_name: registry-cache
+    environment:
+      OTEL_TRACES_EXPORTER: none
+      REGISTRY_LOG_LEVEL: warn
+      # attention: don't know why but without this it not working.
+      REGISTRY_PROXY_REMOTEURL: https://registry-1.docker.io
+
+      REGISTRY_HTTP_SECRET: ${REGISTRY_HTTP_SECRET}
+      REGISTRY_PROXY_USERNAME: ${REGISTRY_PROXY_USERNAME}
+      REGISTRY_PROXY_PASSWORD: ${REGISTRY_PROXY_PASSWORD}
+      # Proxy settings
+      # explain: custom proxy if needed
+      # HTTP_PROXY: http://192.168.1.10:10808
+      # HTTPS_PROXY: http://192.168.1.10:10808
+      # NO_PROXY: localhost,127.0.0.1,.local,.home,.arpa
+
+    volumes:
+      - ./data/cache:/var/lib/registry
+      - ./config/registry-cache.yml:/etc/distribution/config.yml
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    restart: always
+
+  pypi-cache:
+    build:
+      context: ./docker/devpi/
+    container_name: pypi-cache
+    restart: always
+    # explain: custom proxy if needed
+    # environment:
+    # HTTP_PROXY: http://192.168.1.10:10808
+    # HTTPS_PROXY: http://192.168.1.10:10808
+    # NO_PROXY: localhost,127.0.0.1,.local,.home,.arpa
+
+    volumes:
+      - pypi_cache:/data
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  pypi_cache:
